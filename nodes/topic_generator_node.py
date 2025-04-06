@@ -31,7 +31,7 @@ class GenerateTopicNode(BaseComponent):
 
         
         first_speaker = "pro"
-        print(f"Welcome to our debate panel! Today's debate topic is: {debate_topic}")
+        self.logger.info("Welcome to our debate panel! Today's debate topic is: %s", debate_topic)
         return {
             "debate_topic": debate_topic,
             "positions": positions,

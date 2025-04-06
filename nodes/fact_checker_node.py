@@ -6,6 +6,7 @@ import os
 from utils import create_debate_message
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
+import logging
 
 load_dotenv()
 
@@ -27,6 +28,7 @@ class FactCheck(BaseModel):
 class FactCheckNode:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY_GPT4O"))
+        self.logger = logging.getLogger(self.__class__.__name__)
 
     def __call__(self, state: DebateState) -> Dict[str, Any]:
         messages = state.get("messages", [])
@@ -54,7 +56,7 @@ class FactCheckNode:
 
         result = completion.choices[0].message.parsed.binary_score
         justification = completion.choices[0].message.parsed.justification
-        print(f"Fact-check result: {result}, Justification: {justification}")
+        self.logger.info("Fact-check result: %s\nJustification: %s", result, justification)
         if result == "yes":
             # Mark the original message as validated
             last_message["validated"] = True

@@ -169,7 +169,6 @@ class BaseComponent:
         """
         Updates the node's local copy of the state.
         """
-        self.logger.info("Calling node %s", self.__class__.__name__)
         self.state = state
         for key, value in state.items():
             setattr(self, key, value)

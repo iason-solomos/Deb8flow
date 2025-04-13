@@ -15,6 +15,8 @@ from opentelemetry import trace
 from opentelemetry.trace import get_tracer_provider
 from debate_state import DebateState
 from configurations.llm_config import LLMConfig, OpenAILLMConfig, AzureOpenAILLMConfig
+from rich.console import Console
+from rich.logging import RichHandler
 
 
 class BaseComponent:
@@ -41,6 +43,7 @@ class BaseComponent:
         tracer = trace.get_tracer(__name__, tracer_provider=get_tracer_provider())
 
         self.logger = logger
+        self._configure_rich_logger() 
         self.tracer = tracer
         self.llm: Optional[ChatOpenAI] = None
         self.output_parser: Optional[StrOutputParser] = None
@@ -55,6 +58,30 @@ class BaseComponent:
         if llm_config is not None:
             self.llm = self._init_llm(llm_config, temperature)
             self.output_parser = StrOutputParser()
+
+    def _configure_rich_logger(self):
+        """Set up Rich logging with styles"""
+        console = Console(width=100, color_system="auto")
+        handler = RichHandler(
+            console=console,
+            show_time=True,
+            show_level=True,
+            markup=True  # Enable rich markup like [bold]
+        )
+        self.logger.addHandler(handler)
+        self.logger.propagate = False
+
+    def log_debate_event(self, message: str, prefix: str = "", style: str = ""):
+        """Centralized rich-formatted logging"""
+        from rich.text import Text
+        prefix_map = {
+            "PRO": "[cyan]PRO[/]",
+            "CON": "[magenta]CON[/]",
+            "FACT": "[red]FACT-CHECK[/]",
+            "JUDGE": "[yellow]JUDGE[/]"
+        }
+        styled_msg = f"{prefix_map.get(prefix, prefix)}{' ' + message if message else ''}"
+        self.logger.info(styled_msg, extra={"markup": True})
 
     def _init_llm(self, config: LLMConfig, temperature: float):
         """

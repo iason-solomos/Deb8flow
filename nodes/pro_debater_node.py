@@ -53,7 +53,12 @@ class ProDebaterNode(BaseComponent):
         else:
             raise ValueError(f"Unknown turn for ProDebater: stage={stage}, speaker={speaker}")
         new_message = create_debate_message(speaker=SPEAKER_PRO, content=result, stage=stage)
-        self.logger.info("Speaker: %s, Stage: %s, Retry: %s\nMessage:\n%s", speaker, stage, retrying, result)
+        self.log_debate_event(
+            f"[bold]{stage.upper()}[/] {'🔁 (Retry)' if retrying else ''}\n"
+            f"{result}\n",
+            prefix="PRO"
+        )
+
         return {
             "messages": messages + [new_message]
         }

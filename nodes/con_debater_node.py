@@ -54,6 +54,11 @@ class ConDebaterNode(BaseComponent):
 
         new_message = create_debate_message(speaker=SPEAKER_CON, content=result, stage=stage)
         self.logger.info("Speaker: %s, Stage: %s, Retry: %s\nMessage:\n%s", speaker, stage, retrying, result)
+        self.log_debate_event(
+            f"[bold]{stage.upper()}[/] {'🔁 (Retry)' if retrying else ''}\n"
+            f"{result}\n",
+            prefix="CON"
+        )
         return {
             "messages": messages + [new_message]
         }

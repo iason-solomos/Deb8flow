@@ -31,7 +31,17 @@ class GenerateTopicNode(BaseComponent):
 
         
         first_speaker = "pro"
-        self.logger.info("Welcome to our debate panel! Today's debate topic is: %s", debate_topic)
+        # self.logger.info("Welcome to our debate panel! Today's debate topic is: %s", debate_topic)
+
+        self.logger.info("[bold green]┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓[/]")
+        self.logger.info("[bold green]┃        DEBATE SESSION STARTED        ┃[/]")
+        self.logger.info("[bold green]┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛[/]")
+        self.logger.info("")
+        self.logger.info("🏛️  [bold]Topic:[/] %s", topic_text.strip())
+        self.logger.info("👥 [bold]Positions:[/]")
+        self.logger.info("   ▸ [cyan]PRO:[/] In favor of the topic")
+        self.logger.info("   ▸ [magenta]CON:[/] Against the topic")
+
         return {
             "debate_topic": debate_topic,
             "positions": positions,

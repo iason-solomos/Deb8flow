@@ -1,3 +1,4 @@
+import textwrap
 from typing import Dict, Any
 from openai import OpenAI
 from debate_state import DebateState
@@ -29,12 +30,36 @@ class FactCheckNode:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY_GPT4O"))
         self.logger = logging.getLogger(self.__class__.__name__)
+        self._configure_rich_logger() 
+
+
+    def _configure_rich_logger(self):
+        """Initialize rich logging for standalone nodes"""
+        from rich.console import Console
+        from rich.logging import RichHandler
+        
+        console = Console(width=100)
+        handler = RichHandler(
+            console=console,
+            show_time=True,
+            show_level=True,
+            markup=True,
+            show_path=False
+        )
+        self.logger.addHandler(handler)
+        self.logger.propagate = False
 
     def __call__(self, state: DebateState) -> Dict[str, Any]:
         messages = state.get("messages", [])
         last_message = messages[-1]
         claim = last_message["content"]
         speaker = last_message["speaker"]
+        stage = state["stage"]
+
+        self.logger.info(
+        f"[bold red]Fact-Checking {speaker.upper()}'s {stage.title()} Claim:[/]\n"
+        f"[dim]{textwrap.shorten(claim, width=150, placeholder='...')}[/]"
+    )
 
         completion = self.client.beta.chat.completions.parse(
             model="gpt-4o-search-preview",
@@ -56,15 +81,15 @@ class FactCheckNode:
 
         result = completion.choices[0].message.parsed.binary_score
         justification = completion.choices[0].message.parsed.justification
-        self.logger.info("Fact-check result: %s\nJustification: %s", result, justification)
         if result == "yes":
-            # Mark the original message as validated
+            self.logger.info(f"[green]✅ Verified[/]\n"f"[dim]{justification}[/]")
             last_message["validated"] = True
             return {
                 "messages": messages,
                 "validated": True
             }
         else:
+            self.logger.info(f"[red]❌ Disputed[/]\n"f"[bold]Reason:[/] {justification}\n"f"[yellow]⚠ {speaker.upper()} now has {state.get(f'times_{speaker}_fact_checked', 0) + 1}/3 failed checks[/]")
             fact_checker_msg = create_debate_message(
                 speaker="fact_checker",
                 content=result,

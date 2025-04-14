@@ -66,14 +66,14 @@ class BaseComponent:
             console=console,
             show_time=True,
             show_level=True,
-            markup=True  # Enable rich markup like [bold]
+            markup=True,
+            show_path=False
         )
         self.logger.addHandler(handler)
         self.logger.propagate = False
 
     def log_debate_event(self, message: str, prefix: str = "", style: str = ""):
         """Centralized rich-formatted logging"""
-        from rich.text import Text
         prefix_map = {
             "PRO": "[cyan]PRO[/]",
             "CON": "[magenta]CON[/]",

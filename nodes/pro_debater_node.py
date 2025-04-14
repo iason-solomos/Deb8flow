@@ -55,10 +55,10 @@ class ProDebaterNode(BaseComponent):
         new_message = create_debate_message(speaker=SPEAKER_PRO, content=result, stage=stage)
         self.log_debate_event(
             f"[bold]{stage.upper()}[/] {'🔁 (Retry)' if retrying else ''}\n"
-            f"{result}\n"
-            f"[dim]Tokens: {self.prompt_tokens + self.completion_tokens}[/]",
+            f"{result}\n",
             prefix="PRO"
         )
+
         return {
             "messages": messages + [new_message]
         }

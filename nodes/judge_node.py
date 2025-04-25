@@ -34,7 +34,7 @@ class JudgeNode(BaseComponent):
         messages = state.get("messages", [])
         debate_history = get_debate_history(messages)
 
-        result = self.chain.invoke({
+        result = self.execute_chain({
             "debate_topic": debate_topic,
             "debate_history": debate_history
         })

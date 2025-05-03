@@ -23,7 +23,7 @@ def setup_logging():
     logging.getLogger("httpx").setLevel(logging.WARNING)
 
 def validate_env():
-    required_var = "OPENAI_API_KEY_GPT4O"
+    required_var = "OPENAI_API_KEY"
     if not os.getenv(required_var):
         raise EnvironmentError(f"Missing environment variable: {required_var}")
 

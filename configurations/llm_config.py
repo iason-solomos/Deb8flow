@@ -45,6 +45,13 @@ azure_llm_config_map = {
         azure_endpoint=os.getenv("AZURE_ENDPOINT_GPT4O"),
         openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
         openai_api_key=os.getenv("AZURE_OPENAI_API_KEY_GPT4O"),
+    ),
+    "gpt-4.1": AzureOpenAILLMConfig(
+        deployment_name="gpt-4.1",
+        model_name="gpt-4.1",
+        azure_endpoint=os.getenv("AZURE_ENDPOINT_GPT"),
+        openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+        openai_api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     )
 }
 
@@ -63,6 +70,10 @@ azure_embedding_config_map = {
 llm_config_map = {
     "gpt-4o": OpenAILLMConfig(
         model_name="gpt-4o",
-        openai_api_key=os.getenv("OPENAI_API_KEY_GPT4O"),
+        openai_api_key=os.getenv("OPENAI_API_KEY"),
+    ),
+    "gpt-4.1": OpenAILLMConfig(
+        model_name="gpt-4.1",
+        openai_api_key=os.getenv("OPENAI_API_KEY"),
     )
 }

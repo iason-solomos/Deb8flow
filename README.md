@@ -94,7 +94,7 @@ pip install -r requirements.txt
 
 Should include those keys:
 
-OPENAI_API_KEY_GPT4O
+OPENAI_API_KEY
 
 and optionally (but recommended) for tracing:
 

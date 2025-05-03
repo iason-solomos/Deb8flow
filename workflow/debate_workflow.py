@@ -14,13 +14,13 @@ class DebateWorkflow:
     def _initialize_workflow(self) -> StateGraph:
         workflow = StateGraph(DebateState)
         # Nodes
-        workflow.add_node("generate_topic_node", GenerateTopicNode(llm_config_map["gpt-4o"]))
-        workflow.add_node("pro_debater_node", ProDebaterNode(llm_config_map["gpt-4o"]))
-        workflow.add_node("con_debater_node", ConDebaterNode(llm_config_map["gpt-4o"]))
+        workflow.add_node("generate_topic_node", GenerateTopicNode(llm_config_map["gpt-4.1"]))
+        workflow.add_node("pro_debater_node", ProDebaterNode(llm_config_map["gpt-4.1"]))
+        workflow.add_node("con_debater_node", ConDebaterNode(llm_config_map["gpt-4.1"]))
         workflow.add_node("fact_check_node", FactCheckNode())
         workflow.add_node("fact_check_router_node", FactCheckRouterNode())
         workflow.add_node("debate_moderator_node", DebateModeratorNode())
-        workflow.add_node("judge_node", JudgeNode(llm_config_map["gpt-4o"]))
+        workflow.add_node("judge_node", JudgeNode(llm_config_map["gpt-4.1"]))
 
         # Entry point
         workflow.set_entry_point("generate_topic_node")

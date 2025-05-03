@@ -5,7 +5,7 @@ from configurations.debate_constants import STAGE_OPENING, SPEAKER_PRO
 
 @pytest.mark.asyncio
 async def test_pro_debater_opening_statement():
-    node = ProDebaterNode(llm_config_map["gpt-4o"], temperature=0.1)
+    node = ProDebaterNode(llm_config_map["gpt-4.1"], temperature=0.1)
 
     mock_state = {
         "debate_topic": "Should governments ban facial recognition technology?",

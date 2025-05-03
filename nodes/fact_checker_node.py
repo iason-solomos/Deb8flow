@@ -28,7 +28,7 @@ class FactCheck(BaseModel):
 
 class FactCheckNode:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY_GPT4O"))
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.logger = logging.getLogger(self.__class__.__name__)
         self._configure_rich_logger() 
 

@@ -5,7 +5,7 @@ from configurations.debate_constants import STAGE_REBUTTAL, SPEAKER_CON
 
 @pytest.mark.asyncio
 async def test_con_rebuttal_statement():
-    node = ConDebaterNode(llm_config_map["gpt-4o"], temperature=0.1)
+    node = ConDebaterNode(llm_config_map["gpt-4.1"], temperature=0.1)
 
     mock_state = {
         "debate_topic": "Should AI be used in hiring decisions?",

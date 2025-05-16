@@ -12,7 +12,7 @@ This project showcases complex agentic flows, runtime control logic, fact verifi
   PRO vs CON debaters exchange structured arguments, rebuttals, counters, and final remarks.
 
 - **LLM-Powered Agents**  
-  Built using OpenAI’s GPT-4o (with web search) and LangChain runtimes.
+  Built using OpenAI’s GPT-4.1 (with web search) and LangChain runtimes.
 
 - **Fact Checker Agent**  
   Validates claims using OpenAI's integrated web search; enforces accuracy with retry logic and disqualification if falsehoods persist.
@@ -133,7 +133,7 @@ deb8flow/
 
 [LangChain](https://python.langchain.com/docs/introduction/) <br/>
 
-OpenAI GPT-4o
+OpenAI GPT-4.1
 
 Python 3.10+
 
